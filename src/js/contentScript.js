@@ -127,30 +127,35 @@ if (matchDomain('elmercurio.com')) {
   const counter = document.getElementById('article-counter');
   removeDOMElement(counter);
 } else if (matchDomain('nzherald.co.nz')) {
-  const articleContent = document.querySelector('.article__content');
-  if (articleContent) {
-    const articleOffer = document.querySelector('.article-offer');
-    if (articleOffer) {
-      const cssSelector = articleContent.querySelectorAll('p')[5].getAttribute('class');
-      const hiddenNotPars = articleContent.querySelectorAll('.' + cssSelector + ':not(p)');
-      for (const hiddenNotPar of hiddenNotPars) {
-        hiddenNotPar.classList.remove(cssSelector);
-        hiddenNotPar.removeAttribute('style');
+  document.addEventListener('DOMContentLoaded', () => {
+    const articleContent = document.querySelector('.article__content');
+    if (articleContent) {
+      const hasPremium = document.querySelector('.article__header-premium');
+      if (hasPremium) {
+        const cssSelector = articleContent.querySelectorAll('p')[5].getAttribute('class');
+        const hiddenNotPars = articleContent.querySelectorAll('.' + cssSelector + ':not(p)');
+        for (const hiddenNotPar of hiddenNotPars) {
+          hiddenNotPar.classList.remove(cssSelector);
+          hiddenNotPar.removeAttribute('style');
+        }
+        const hiddenPars = articleContent.querySelectorAll('p.' + cssSelector);
+        const parser = new DOMParser();
+        for (const hiddenPar of hiddenPars) {
+          const parHtml = parser.parseFromString('<div style="margin: 10px 0px; font-size: 17px">' + hiddenPar.innerHTML + '</div>', 'text/html');
+          const parDom = parHtml.querySelector('div');
+          articleContent.insertBefore(parDom, hiddenPar);
+        }
+        const firstSpan = document.querySelector('p > span');
+        if (firstSpan) { firstSpan.removeAttribute('class'); }
+        const articleOffer = document.querySelector('.article-offer');
+        if (articleOffer) {
+          removeDOMElement(articleOffer);
+        }
       }
-      const hiddenPars = articleContent.querySelectorAll('p.' + cssSelector);
-      const parser = new DOMParser();
-      for (const hiddenPar of hiddenPars) {
-        const parHtml = parser.parseFromString('<div style="margin: 10px 0px; font-size: 17px">' + hiddenPar.innerHTML + '</div>', 'text/html');
-        const parDom = parHtml.querySelector('div');
-        articleContent.insertBefore(parDom, hiddenPar);
-      }
-      const firstSpan = document.querySelector('p > span');
-      if (firstSpan) { firstSpan.removeAttribute('class'); }
-      removeDOMElement(articleOffer);
     }
-  }
-  const premiumToaster = document.querySelector('#premium-toaster');
-  removeDOMElement(premiumToaster);
+    const premiumToaster = document.querySelector('#premium-toaster');
+    removeDOMElement(premiumToaster);
+  });
 } else if (matchDomain('interest.co.nz')) {
   const wrapper = document.getElementById('pp-ablock-banner-wrapper');
   const overlay = document.querySelector('.black-overlay');
