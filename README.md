@@ -47,6 +47,7 @@
 [De Gelderlander](https://www.gelderlander.nl)\
 [De Groene Amsterdammer](https://www.groene.nl)\
 [De Stentor](https://www.destentor.nl)\
+[De Speld](https://speld.nl)\
 [De Tijd](https://www.tijd.be)\
 [De Volkskrant](https://www.volkskrant.nl)\
 [DELFI](https://www.delfi.ee)\
@@ -58,6 +59,7 @@
 [Eindhovens Dagblad](https://www.ed.nl)\
 [El Mercurio](https://www.elmercurio.com)\
 [El Pais](https://www.elpais.com/)\
+[El Periodico](https://www.elperiodico.com/)\
 [Elu24](https://www.elu24.ee)\
 [Encyclopedia Britannica](https://www.britannica.com)\
 [Estadão](https://www.estadao.com.br)\
@@ -121,6 +123,7 @@
 [Postimees](https://www.postimees.ee)\
 [Quartz](https://qz.com)\
 [Quora](https://www.quora.com)\
+[Quotidiani Gelocal](https://quotidiani.gelocal.it)\
 [Republic.ru](https://republic.ru)\
 [San Diego Union Tribune](https://www.sandiegouniontribune.com)\
 [San Francisco Chronicle](https://www.sfchronicle.com)\
@@ -186,7 +189,8 @@
 [Vulture](https://www.vulture.com/)\
 [Winston-Salem Journal](https://journalnow.com)\
 [Wired](https://www.wired.com)\
-[World Politics Review](https://www.worldpoliticsreview.com)
+[World Politics Review](https://www.worldpoliticsreview.com)\
+[Zeit Online](https://www.zeit.de)
 
 ### Sites with limited number of free articles
 The free article limit can normally be bypassed by removing cookies for the site.*

@@ -25,11 +25,13 @@
     "*://*.editorialedomani.it/*",
     "*://*.elmercurio.com/*",
     "*://*.elpais.com/*",
+    "*://*.elperiodico.com/*",
     "*://*.elu24.ee/*",
     "*://*.estadao.com.br/*",
     "*://*.examiner.com.au/*",
     "*://*.firstthings.com/*",
     "*://*.ft.com/*",
+    "*://*.gelocal.it/*",
     "*://*.grubstreet.com/*",
     "*://*.haaretz.co.il/*",
     "*://*.humo.be/*",
@@ -67,7 +69,9 @@
     "*://*.wsj.com/*",
     "*://*.hbr.org/*",
     "*://*.financialpost.com/*",
-    "*://*.sueddeutsche.de/*"
+    "*://*.sueddeutsche.de/*",
+    "*://*.elmundo.es/*",
+    "*://*.time.com/*"
     ],
       "js": ["src/js/contentScript.js"]
     }
@@ -152,6 +156,7 @@
     "*://*.fortune.com/*",
     "*://*.ft.com/*",
     "*://*.genomeweb.com/*",
+    "*://*.gelocal.it/*",
     "*://*.glassdoor.com/*",
     "*://*.globes.co.il/*",
     "*://*.groene.nl/*",
@@ -213,6 +218,7 @@
     "*://*.sofrep.com/*",
     "*://*.spectator.co.uk/*",
     "*://*.spectator.com.au/*",
+    "*://*.speld.nl/",
     "*://*.statista.com/*",
     "*://*.stuff.co.nz/*",
     "*://*.sun-sentinel.com/*",
@@ -263,7 +269,10 @@
     "*://*.ambito/*",
     "*://*.sueddeutsche.de/*",
     "*://*.spectator.us/*",
-    "*://*.humo.be/*"
+    "*://*.humo.be/*",
+    "*://*.elmundo.es/*",
+    "*://*.time.com/*",
+    "*://*.zeit.de/*"
   ],
-  "version": "1.7.8"
+  "version": "1.7.9"
 }

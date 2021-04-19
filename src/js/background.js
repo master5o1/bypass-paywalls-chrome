@@ -4,7 +4,9 @@ const restrictions = {
   'adweek.com': /^((?!\.adweek\.com\/(.+\/)?(amp|agencyspy|tvnewser|tvspy)\/).)*$/,
   'barrons.com': /.+barrons\.com\/(amp\/)?article(s)?\/.+/,
   'economist.com': /.+economist\.com\/.+\/\d{1,4}\/\d{1,2}\/\d{2}\/.+/,
-  'seekingalpha.com': /.+seekingalpha\.com\/article\/.+/
+  'seekingalpha.com': /.+seekingalpha\.com\/article\/.+/,
+  'techinasia.com': /\.techinasia\.com\/.+/,
+  'ft.com': /.+\.ft.com\/content\//
 };
 
 // Don't remove cookies before page load
@@ -22,7 +24,7 @@ const allowCookies = [
   'destentor.nl',
   'ed.nl',
   'examiner.com.au',
-  'ft.com',
+  'gelocal.it',
   'gelderlander.nl',
   'grubstreet.com',
   'harpers.org',
@@ -32,7 +34,6 @@ const allowCookies = [
   'lrb.co.uk',
   'medium.com',
   'mercurynews.com',
-  'mexiconewsdaily.com',
   'newstatesman.com',
   'nrc.nl',
   'nymag.com',
@@ -45,6 +46,7 @@ const allowCookies = [
   'seekingalpha.com',
   'sofrep.com',
   'spectator.co.uk',
+  'speld.nl',
   'tubantia.nl',
   'techinasia.com',
   'telegraaf.nl',
@@ -56,14 +58,12 @@ const allowCookies = [
   'thecut.com',
   'thediplomat.com',
   'themercury.com.au',
-  'thestar.com',
   'towardsdatascience.com',
   'trouw.nl',
   'vn.nl',
   'volkskrant.nl',
   'vulture.com',
   'washingtonpost.com',
-  'wired.com',
   'nzz.ch',
   'handelsblatt.com',
   'thehindu.com',
@@ -71,7 +71,11 @@ const allowCookies = [
   'haaretz.co.il',
   'haaretz.com',
   'themarker.com',
-  'sueddeutsche.de'
+  'sueddeutsche.de',
+  'gelocal.it',
+  'elmundo.es',
+  'time.com',
+  'zeit.de'
 ];
 
 // Removes cookies after page load
@@ -90,7 +94,6 @@ const removeCookies = [
   'destentor.nl',
   'ed.nl',
   'examiner.com.au',
-  'ft.com',
   'gelderlander.nl',
   'globes.co.il',
   'grubstreet.com',
@@ -98,9 +101,7 @@ const removeCookies = [
   'hbr.org',
   'humo.be',
   'lesechos.fr',
-  'medium.com',
   'mercurynews.com',
-  'mexiconewsdaily.com',
   'newstatesman.com',
   'nrc.nl',
   'nymag.com',
@@ -111,18 +112,17 @@ const removeCookies = [
   'seattletimes.com',
   'sofrep.com',
   'spectator.co.uk',
+  'speld.nl',
   'telegraaf.nl',
   'theadvocate.com.au',
   'theage.com.au',
   'theatlantic.com',
   'thecut.com',
   'thediplomat.com',
-  'thestar.com',
   'towardsdatascience.com',
   'tubantia.nl',
   'vn.nl',
   'vulture.com',
-  'wired.com',
   'wsj.com'
 ];
 
@@ -150,7 +150,8 @@ const removeCookiesSelectDrop = {
   'humo.be': ['TID_ID'],
   'nrc.nl': ['counter'],
   'pzc.nl': ['temptationTrackingId'],
-  'tubantia.nl': ['temptationTrackingId']
+  'tubantia.nl': ['temptationTrackingId'],
+  'speld.nl': ['speld-paywall']
 };
 
 // Override User-Agent with Googlebot
@@ -163,7 +164,6 @@ const useGoogleBotSites = [
   'genomeweb.com',
   'heraldsun.com.au',
   'lavoixdunord.fr',
-  'mexiconewsdaily.com',
   'ntnews.com.au',
   'quora.com',
   'seekingalpha.com',
@@ -177,8 +177,10 @@ const useGoogleBotSites = [
   'republic.ru',
   'nzz.ch',
   'handelsblatt.com',
-  'washingtonpost.com',
-  'df.cl'
+  'df.cl',
+  'ft.com',
+  'wired.com',
+  'zeit.de'
 ];
 
 // Override User-Agent with Bingbot
@@ -235,7 +237,12 @@ const blockedRegexes = {
   'washingtonpost.com': /.+\.washingtonpost\.com\/.+\/pwapi-proxy\.min\.js/,
   'thehindu.com': /ajax\.cloudflare\.com\/cdn-cgi\/scripts\/.+\/cloudflare-static\/rocket-loader\.min\.js/,
   'technologyreview.com': /.+\.blueconic\.net\/.+/,
-  'spectator.us': /(cdn\.cxense\.com\/.+|\.tinypass\.com\/.+)/
+  'spectator.us': /(cdn\.cxense\.com\/.+|\.tinypass\.com\/.+)/,
+  'gelocal.it': /(\.repstatic\.it\/minify\/sites\/gelocal\/.+\/config\.cache(_\d)?\.php|cdn\.ampproject\.org\/v\d\/amp-(access|ad)-.+\.js)/,
+  'elmundo.es': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
+  'time.com': /\/time\.com\/dist\/meter-wall-client-js\..+\.js/,
+  'thestar.com': /\.com\/api\/overlaydata/,
+  'elpais.com': /(\.epimg\.net\/js\/.+\/(noticia|user)\.min\.js|\/elpais\.com\/arc\/subs\/p\.min\.js|cdn\.ampproject\.org\/v\d\/amp-(access|(sticky-)?ad|consent)-.+\.js)/
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
@@ -359,6 +366,8 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(function (details) {
         requestHeader.value = 'https://cooking.nytimes.com';
       } else if (matchUrlDomain('fd.nl', details.url)) {
         requestHeader.value = 'https://www.facebook.com/';
+      } else if (matchUrlDomain('medium.com', details.url)) {
+        requestHeader.value = 'https://t.co/x?amp=1';
       } else {
         requestHeader.value = 'https://www.google.com/';
       }
@@ -377,6 +386,11 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(function (details) {
       requestHeaders.push({
         name: 'Referer',
         value: 'https://www.facebook.com/'
+      });
+    } else if (matchUrlDomain('medium.com', details.url)) {
+      requestHeaders.push({
+        name: 'Referer',
+        value: 'https://t.co/x?amp=1'
       });
     } else {
       requestHeaders.push({

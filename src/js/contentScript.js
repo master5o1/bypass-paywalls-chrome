@@ -1,4 +1,4 @@
-if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'thetimes.co.uk'])) {
+if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'thetimes.co.uk', 'elmundo.es'])) {
   window.localStorage.clear();
 }
 
@@ -115,14 +115,11 @@ if (matchDomain('elmercurio.com')) {
     readMore.click();
   }
 } else if (matchDomain('mexiconewsdaily.com')) {
-  document.addEventListener('DOMContentLoaded', () => {
-    const sideNotification = document.querySelector('.pigeon-widget-prompt');
-    const subMessage = document.querySelector('.sub_message_container');
-    const popup = document.querySelector('.popupally-pro-outer-full-width-7-fluid_qemskqa');
-    const bgFocusRemoverId = document.getElementById('popup-box-pro-gfcr-7');
-
-    removeDOMElement(sideNotification, subMessage, popup, bgFocusRemoverId);
-  });
+  window.setTimeout(function () {
+    const popup = document.querySelector('div.pigeon-widget-prompt');
+    const cproOverlay = document.querySelector('.cpro-overlay');
+    removeDOMElement(popup, cproOverlay);
+  }, 500); // Delay (in milliseconds)
 } else if (matchDomain('the-american-interest.com')) {
   const counter = document.getElementById('article-counter');
   removeDOMElement(counter);
@@ -271,8 +268,10 @@ if (matchDomain('elmercurio.com')) {
   const counter = document.querySelector('.full.hidden-print.popup-msg');
   removeDOMElement(counter);
 } else if (matchDomain('ft.com')) {
-  const cookieBanner = document.querySelector('.cookie-banner');
-  removeDOMElement(cookieBanner);
+  const cookieBanner = document.querySelector('.o-banner__outer');
+  const ribbon = document.querySelector('.js-article-ribbon');
+  const ads = document.querySelector('.o-ads');
+  removeDOMElement(cookieBanner, ads, ribbon);
 } else if (matchDomain('thehindu.com')) {
   document.addEventListener('DOMContentLoaded', () => {
     const counter = document.querySelector('#test');
@@ -341,14 +340,17 @@ if (matchDomain('elmercurio.com')) {
 } else if (matchDomain('cen.acs.org')) {
   const paywall = document.querySelector('.meteredBar');
   removeDOMElement(paywall);
-} else if (matchDomain('elpais.com')) {
+} else if (matchDomain('elperiodico.com')) {
   setTimeout(function () {
-    const paywall = document.querySelector('.fc-ab-root');
-    const body = document.querySelector('.salida_articulo');
-
-    removeDOMElement(paywall);
-    body.removeAttribute('style');
-  }, 500); // Delay (in milliseconds)
+    const unavailableArea = document.querySelector('.closed');
+    const infoBox = document.querySelector('.ep-masPeriodico-info');
+    if (unavailableArea) {
+      unavailableArea.classList.remove('closed');
+    }
+    if (infoBox) {
+      infoBox.parentNode.removeChild(infoBox);
+    }
+  }, 1000);
 } else if (matchDomain('techinasia.com')) {
   const paywall = document.querySelector('.paywall-content');
   if (paywall) {
@@ -473,7 +475,7 @@ if (matchDomain('elmercurio.com')) {
       .forEach(function (el) {
         el.removeAttribute('class');
       });
-  }, 2000); // Delay (in milliseconds)
+  }, 1000); // Delay (in milliseconds)
 } else if (matchDomain('theatlantic.com')) {
   // Remove all nudge elements
   document.querySelectorAll('div[class*="c-nudge"]').forEach(function (el) {
@@ -491,8 +493,8 @@ if (matchDomain('elmercurio.com')) {
   removeDOMElement(paywall);
 } else if (matchDomain('delfi.ee')) {
   // Remove 'adblocker-detected' notification overlay
-  document.body.classList.remove('adb-curtain');
-  const el = document.getElementById('ab--notification-header');
+  document.body.classList.remove('U-overflow-hidden');
+  const el = document.getElementsByClassName('C-ad-block-layer')[0];
   removeDOMElement(el);
 } else if (matchDomain(['postimees.ee', 'elu24.ee'])) {
   setTimeout(function () {
@@ -505,6 +507,29 @@ if (matchDomain('elmercurio.com')) {
   const adBlock = document.getElementById('ad-article-inline');
   const adHeader = document.getElementById('sticky-ad-header');
   removeDOMElement(block, adBlock, adHeader);
+} else if (matchDomain('themarker.com')) {
+  setTimeout(function () {
+    const paywall = document.querySelector('[data-test="bottomStrip"]');
+    const notifications = document.querySelector('#pwSubscribePopup');
+    const banner = document.querySelector('#themarker\\.com\\.billboard\\.desktop');
+    const newsBanner = document.querySelector('#themarker\\.com\\.news\\.banner');
+    const midBanner = document.querySelector('#themarker\\.com.headline\\.banner\\.desktop');
+    const financeBanner = document.querySelector('#themarker\\.com\\.finance\\.banner');
+    const topStrip = document.querySelector('[data-test="topStrip"]');
+    const otherBanners = Array.from(document.querySelectorAll('[data-audtarget]'));
+    removeDOMElement(paywall, notifications, banner, topStrip, midBanner, newsBanner, financeBanner, ...otherBanners);
+  }, 500);
+} else if (matchDomain('haaretz.co.il')) {
+  setTimeout(function () {
+    const notifications = document.querySelector('#pwSubscribePopup');
+    const paywall = document.querySelector('[data-test="bottomStrip"]');
+    const banner = document.querySelector('#haaretz\\.co\\.il\\.billboard\\.desktop');
+    const editorsBanner = document.querySelector('#haaretz\\.co\\.il\\.editors\\.banner');
+    const headlinesBanner = document.querySelector('#haaretz\\.co\\.il\\.headline\\.box\\.desktop');
+    const topStrip = document.querySelector('[data-test="topStrip"]');
+    const otherBanners = Array.from(document.querySelectorAll('[data-audtarget]'));
+    removeDOMElement(paywall, notifications, banner, editorsBanner, topStrip, headlinesBanner, ...otherBanners);
+  }, 500);
 } else if (matchDomain('sueddeutsche.de')) {
   const url = window.location.href;
   document.addEventListener('DOMContentLoaded', () => {
@@ -526,12 +551,75 @@ if (matchDomain('elmercurio.com')) {
     }
   }, 500); // Delay (in milliseconds)
 } else if (matchDomain('adweek.com')) {
-  const url = window.location.href;
   const bodySingle = document.querySelector('body.single');
   const ampHtml = document.querySelector('link[rel="amphtml"]');
   if (bodySingle && ampHtml) {
     bodySingle.classList.remove('single');
     window.location.href = ampHtml.href;
+  }
+} else if (matchDomain('gelocal.it')) {
+  if (!window.location.href.includes('/amp/')) {
+    const paywallAdagio = document.querySelector('.paywall-adagio');
+    removeDOMElement(paywallAdagio);
+  } else {
+    const paywall = document.querySelector('div[amp-access="showContent"]');
+    if (paywall) { paywall.removeAttribute('amp-access-hide'); }
+    const ampAds = document.querySelectorAll('amp-ad');
+    removeDOMElement(...ampAds);
+  }
+} else if (matchDomain('elmundo.es')) {
+  const premium = document.querySelector('.ue-c-article__premium');
+  const url = window.location.href;
+  if (!url.includes('/amp.' + 'elmundo.es' + '/')) {
+    if (premium) {
+      removeDOMElement(premium);
+      window.location.href = window.location.href.replace('/www.', '/amp.');
+    }
+  } else {
+    const paywall = document.querySelector('div[amp-access="authorized!=true"]');
+    if (paywall) {
+      removeDOMElement(paywall);
+      const divHidden = document.querySelector('div[amp-access="authorized=true"]');
+      if (divHidden) {
+        divHidden.removeAttribute('amp-access-hide');
+      }
+    }
+    const advertising = document.querySelectorAll('.advertising, amp-embed');
+    removeDOMElement(...advertising);
+  }
+} else if (matchDomain('speld.nl')) {
+  const paywallPopup = document.querySelector('.c-paywall-notice');
+  removeDOMElement(paywallPopup);
+} else if (matchDomain('lastampa.it')) {
+  const url = window.location.href;
+  if (!url.includes('/amp/')) {
+    const premium = document.querySelector('.paywall-adagio');
+    removeDOMElement(premium);
+    window.setTimeout(function () {
+      if (premium) {
+        window.location.href = url.split('?')[0] + '/amp/';
+      }
+      const articleBody = document.querySelector('div#article-body[style]');
+      if (articleBody) {
+        articleBody.removeAttribute('style');
+      }
+    }, 500);
+  } else {
+    const paywall = document.querySelector('div[id^="paywall-banner"]');
+    removeDOMElement(paywall);
+    const subscriptionSection = document.querySelector('[subscriptions-section="content"]');
+    if (subscriptionSection) {
+      subscriptionSection.removeAttribute('subscriptions-section');
+      const preview = document.querySelector('div[subscriptions-section="content-not-granted"]');
+      removeDOMElement(preview);
+    }
+    const ampAds = document.querySelectorAll('amp-ad, amp-embed');
+    removeDOMElement(...ampAds);
+  }
+} else if (matchDomain('time.com')) {
+  const body = document.querySelector('body');
+  if (body) {
+    body.setAttribute('style', 'position:relative !important;');
   }
 }
 
